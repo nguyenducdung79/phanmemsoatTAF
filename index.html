@@ -186,7 +186,7 @@
             margin: 18px auto 0 auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 14px;
         }
         @media (max-width: 900px) {
@@ -197,8 +197,8 @@
             color: #ffffff;
             border: 2px solid #006064;
             border-radius: 8px;
-            padding: 13px 12px;
-            font-size: 13.5px;
+            padding: 12px 8px;
+            font-size: 12.5px;
             font-weight: 700;
             text-transform: uppercase;
             cursor: pointer;
@@ -223,6 +223,21 @@
             background: linear-gradient(135deg, #455a64 0%, #607d8b 100%);
             border-color: #263238;
         }
+
+        .menu-btn.btn-import {
+            background: linear-gradient(135deg, #ef6c00 0%, #fb8c00 100%);
+            border-color: #e65100;
+        }
+        .mini-btn {
+            background: #e3f2fd; color: #0d47a1; border: 1px solid #90caf9;
+            padding: 3px 10px; border-radius: 5px; font-size: 12px; font-weight: 600; cursor: pointer;
+        }
+        .mini-btn:hover { background: #bbdefb; }
+        .import-status {
+            display: none; margin: 0 0 10px 0; padding: 7px 12px; border-radius: 6px;
+            background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; font-size: 12.5px;
+        }
+        .import-status.err { background: #ffebee; color: #b71c1c; border-color: #ef9a9a; }
 
         /* MAIN WORKSPACE */
         .main-container {
@@ -296,43 +311,6 @@
             border-radius: 10px; padding: 0 8px; margin-right: 6px; font-size: 12px;
         }
         .apt-group code { background: #e2e8f0; border-radius: 3px; padding: 0 4px; cursor: help; }
-
-        /* LOGIN / LOGOUT */
-        body.locked > *:not(#loginOverlay):not(script) { display: none !important; }
-        #loginOverlay { display: none; }
-        body.locked #loginOverlay {
-            display: flex; position: fixed; inset: 0; z-index: 9999;
-            align-items: center; justify-content: center; padding: 16px;
-            background: linear-gradient(135deg, #062547 0%, #0d47a1 55%, #062547 100%);
-        }
-        .login-card {
-            width: min(420px, 94vw); background: #fff; border-radius: 12px;
-            padding: 26px 26px 20px; box-shadow: 0 14px 40px rgba(0,0,0,.35);
-            border-top: 5px solid #ffb300;
-        }
-        .login-card h1 { margin: 0 0 4px; font-size: 17px; color: var(--primary); text-align: center; line-height: 1.35; }
-        .login-card .login-sub { text-align: center; font-size: 12.5px; color: #475569; margin-bottom: 16px; }
-        .login-card label { display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin: 10px 0 4px; }
-        .login-card input[type=text], .login-card input[type=password] {
-            width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 7px;
-            font-size: 14.5px; outline: none;
-        }
-        .login-card input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(21,101,192,.15); }
-        .login-card .show-pass { font-weight: 400; display: flex; align-items: center; gap: 6px; margin-top: 8px; cursor: pointer; }
-        .login-card button[type=submit] {
-            width: 100%; margin-top: 16px; padding: 11px; border: 0; border-radius: 7px; cursor: pointer;
-            background: linear-gradient(90deg, #0d47a1, #1976d2); color: #fff; font-weight: 700; font-size: 14.5px;
-        }
-        .login-card button[type=submit]:hover { filter: brightness(1.08); }
-        #loginMsg { min-height: 18px; margin-top: 10px; font-size: 12.5px; color: var(--danger); text-align: center; font-weight: 600; }
-        .login-card .login-foot { margin-top: 12px; font-size: 11px; color: #64748b; text-align: center; }
-        .top-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .user-badge { font-size: 12.5px; color: #e3f2fd; white-space: nowrap; }
-        .logout-btn {
-            background: #d32f2f; color: #fff; border: 1px solid rgba(255,255,255,.5);
-            padding: 4px 12px; border-radius: 16px; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap;
-        }
-        .logout-btn:hover { background: #b71c1c; }
 
         /* RESULTS STYLING */
         .summary-bar {
@@ -472,23 +450,7 @@
         footer strong { color: #ffffff; }
     </style>
 </head>
-<body class="locked">
-
-    <!-- MÀN HÌNH ĐĂNG NHẬP -->
-    <div id="loginOverlay">
-        <form class="login-card" onsubmit="doLogin(); return false;" autocomplete="on">
-            <h1>PHẦN MỀM SOÁT LỖI CODE FORM BẢN TIN TAF</h1>
-            <div class="login-sub">Trung tâm Khí tượng Hàng không Đà Nẵng (AMO Đà Nẵng)<br>Vui lòng đăng nhập để sử dụng</div>
-            <label for="loginUser">Tên đăng nhập</label>
-            <input type="text" id="loginUser" name="username" autocomplete="username" autocapitalize="none" spellcheck="false">
-            <label for="loginPass">Mật khẩu</label>
-            <input type="password" id="loginPass" name="password" autocomplete="current-password">
-            <label class="show-pass"><input type="checkbox" id="loginShow" onchange="document.getElementById('loginPass').type = this.checked ? 'text' : 'password'"> Hiện mật khẩu</label>
-            <button type="submit">ĐĂNG NHẬP</button>
-            <div id="loginMsg" role="alert"></div>
-            <div class="login-foot">Chỉ dành cho cán bộ được cấp tài khoản</div>
-        </form>
-    </div>
+<body>
 
     <!-- TOP HEADER BAR -->
     <div class="top-bar">
@@ -497,11 +459,7 @@
                 ✈️ TỔNG CÔNG TY QUẢN LÝ BAY VIỆT NAM (VATM) — TRUNG TÂM KHÍ TƯỢNG HÀNG KHÔNG (AMC) — ĐÀI KHÍ TƯỢNG HÀNG KHÔNG ĐÀ NẴNG (AMO ĐÀ NẴNG) — ĐOÀN KẾT • KỶ CƯƠNG • AN TOÀN • CHẤT LƯỢNG
             </span>
         </div>
-        <div class="top-right">
-            <div class="utc-badge" id="utc-clock">--:--:-- UTC</div>
-            <span class="user-badge">Tài khoản: <b id="userLabel"></b></span>
-            <button type="button" class="logout-btn" onclick="doLogout()">Đăng xuất</button>
-        </div>
+        <div class="utc-badge" id="utc-clock">--:--:-- UTC</div>
     </div>
 
     <!-- HARMONIZED BANNER -->
@@ -547,6 +505,9 @@
         <button type="button" class="menu-btn" onclick="runCheck('CHANGE')">
             ⚡ SOÁT CÁC NHÓM BIẾN ĐỔI TAF
         </button>
+        <button type="button" class="menu-btn btn-import" onclick="triggerImportFile()">
+            📂 NHẬP SỐ LIỆU TỪ FILE WORD / EXCEL
+        </button>
         <button type="button" class="menu-btn btn-reset" onclick="clearAll()">
             🗑️ XÓA TRẮNG / NHẬP MỚI
         </button>
@@ -562,6 +523,8 @@
 			<!--	<button type="button" onclick="xoaKyTuTruocTAF()" style="margin-right: 6px; padding: 5px 10px; cursor: pointer; background-color: #f59e0b; color: white; border: none; border-radius: 4px; font-weight: bold;">
   ✂️ Xóa ký tự trước TAF</button> -->
             </h2>
+            <input type="file" id="fileImportInput" accept=".docx,.docm,.xlsx,.xlsm,.csv,.tsv,.txt" style="display:none" onchange="handleImportFile(this)">
+            <div id="importStatus" class="import-status"></div>
             <textarea id="tafInput" placeholder="Dán trực tiếp một hoặc nhiều bản tin TAF vào đây (mỗi bản tin kết thúc bằng dấu =)..."></textarea>
             
             <div class="rules-box">
@@ -569,6 +532,9 @@
                 • <b>Bóc tách Thời gian:</b> Tự động giải mã Ngày/Giờ phát hành (<code>ddHHMMZ</code>) và Ngày/Giờ hiệu lực (<code>ddHH/ddHH</code>).<br>
                 • <b>Phạm vi <span id="aptCount">22</span> Sân bay (rê chuột vào mã để xem tên):</b>
                 <div id="airportRef"></div>
+                • <b>Cấu trúc bản tin (bắt buộc):</b> bắt đầu bằng <code>TAF</code> và kết thúc bằng dấu <code>=</code>; thiếu một trong hai là lỗi.<br>
+                • <b>Giờ phát hành TAF chuẩn (ngoài giờ này chỉ có TAF AMD):</b>
+                <div id="issueRef"></div>
                 • <b>Ngưỡng biến đổi Gió:</b> Đổi hướng ≥ 60° (tốc độ trước/sau ≥ 10KT), tốc độ trung bình đổi ≥ 10KT, hoặc gió giật (G) tăng ≥ 10KT.<br>
                 • <b>Ngưỡng Tầm nhìn (VIS):</b> Đối chiếu 14 cấp mã chuẩn (A → O) và sự tương thích với hiện tượng thời tiết (<code>FG, BR, NSW, TS/CB</code>).
             </div>
@@ -578,7 +544,10 @@
         <div class="card">
             <h2>
                 <span>2. Kết Quả Phân Tích & Soát Lỗi</span>
-                <span id="modeLabel" style="font-size:12px; background:#e0f2fe; color:#0369a1; padding:3px 10px; border-radius:12px;">Chế độ: Toàn bộ bản tin</span>
+                <span style="display:flex; gap:8px; align-items:center;">
+                    <button type="button" class="mini-btn" onclick="exportCSV()" title="Xuất kết quả soát lỗi ra file CSV (mở được bằng Excel)">Xuất CSV</button>
+                    <span id="modeLabel" style="font-size:12px; background:#e0f2fe; color:#0369a1; padding:3px 10px; border-radius:12px;">Chế độ: Toàn bộ bản tin</span>
+                </span>
             </h2>
             <div id="resultsArea"></div>
         </div>
@@ -592,138 +561,6 @@
     </footer>
 
 <script>
-// ===================== ĐĂNG NHẬP / ĐĂNG XUẤT =====================
-// LƯU Ý: đây là cổng chặn phía trình duyệt (không phải bảo mật máy chủ).
-// Mật khẩu KHÔNG lưu dạng chữ rõ mà lưu dưới dạng băm SHA-256 (có muối).
-// Thêm tài khoản: mở Console (F12) gõ makeAuthHash('tên','mật khẩu') rồi dán kết quả vào AUTH_HASHES.
-const AUTH_SALT = 'AMODN-TAF-2026';
-const AUTH_HASHES = [
-    '83682eea78ddfe42005a3b8e4365783e4e79a84bda7e1dbe05efe2ea30deb074'
-];
-const AUTH_MAX_FAILS = 5, AUTH_LOCK_MS = 30000;
-let authFails = 0, authLockUntil = 0, authMemSession = null;
-
-function sha256Hex(ascii) {
-    // SHA-256 thuần JavaScript (chạy được cả khi mở file trực tiếp, không cần HTTPS)
-    ascii = unescape(encodeURIComponent(ascii)); // chuỗi -> byte UTF-8
-    const rotr = (v, a) => (v >>> a) | (v << (32 - a));
-    const maxWord = Math.pow(2, 32);
-    let result = '';
-    const words = [];
-    const bitLen = ascii.length * 8;
-    let hash = [], k = [], primeCounter = 0;
-    const isComposite = {};
-    for (let c = 2; primeCounter < 64; c++) {
-        if (!isComposite[c]) {
-            for (let i = 0; i < 313; i += c) isComposite[i] = c;
-            hash[primeCounter] = (Math.pow(c, 0.5) * maxWord) | 0;
-            k[primeCounter++] = (Math.pow(c, 1 / 3) * maxWord) | 0;
-        }
-    }
-    ascii += '\x80';
-    while (ascii.length % 64 - 56) ascii += '\x00';
-    for (let i = 0; i < ascii.length; i++) {
-        words[i >> 2] |= ascii.charCodeAt(i) << ((3 - i) % 4) * 8;
-    }
-    words[words.length] = (bitLen / maxWord) | 0;
-    words[words.length] = bitLen;
-    for (let j = 0; j < words.length;) {
-        const w = words.slice(j, j += 16);
-        const old = hash;
-        hash = hash.slice(0, 8);
-        for (let i = 0; i < 64; i++) {
-            const w15 = w[i - 15], w2 = w[i - 2];
-            const a = hash[0], e = hash[4];
-            const t1 = hash[7] + (rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)) + ((e & hash[5]) ^ (~e & hash[6])) + k[i] +
-                (w[i] = (i < 16) ? w[i] : (w[i - 16] + (rotr(w15, 7) ^ rotr(w15, 18) ^ (w15 >>> 3)) + w[i - 7] + (rotr(w2, 17) ^ rotr(w2, 19) ^ (w2 >>> 10))) | 0);
-            const t2 = (rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)) + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
-            hash = [(t1 + t2) | 0].concat(hash);
-            hash[4] = (hash[4] + t1) | 0;
-        }
-        for (let i = 0; i < 8; i++) hash[i] = (hash[i] + old[i]) | 0;
-    }
-    for (let i = 0; i < 8; i++) {
-        for (let j = 3; j + 1; j--) {
-            const b = (hash[i] >> (j * 8)) & 255;
-            result += (b < 16 ? '0' : '') + b.toString(16);
-        }
-    }
-    return result;
-}
-
-function makeAuthHash(user, pass) {
-    return sha256Hex(String(user).trim().toLowerCase() + '|' + pass + '|' + AUTH_SALT);
-}
-
-function authGetSession() {
-    try { return sessionStorage.getItem('taf_auth_user') || authMemSession; } catch (e) { return authMemSession; }
-}
-function authSetSession(u) {
-    authMemSession = u;
-    try { sessionStorage.setItem('taf_auth_user', u); } catch (e) {}
-}
-function authClearSession() {
-    authMemSession = null;
-    try { sessionStorage.removeItem('taf_auth_user'); } catch (e) {}
-}
-
-function showApp(user) {
-    document.body.classList.remove('locked');
-    document.getElementById('userLabel').textContent = user;
-    document.getElementById('loginPass').value = '';
-    document.getElementById('loginMsg').textContent = '';
-}
-
-function doLogin() {
-    const msg = document.getElementById('loginMsg');
-    const u = document.getElementById('loginUser').value.trim().toLowerCase();
-    const p = document.getElementById('loginPass').value;
-    const now = Date.now();
-    if (now < authLockUntil) {
-        msg.textContent = 'Đăng nhập sai nhiều lần. Vui lòng thử lại sau ' + Math.ceil((authLockUntil - now) / 1000) + ' giây.';
-        return false;
-    }
-    if (!u || !p) { msg.textContent = 'Vui lòng nhập tên đăng nhập và mật khẩu.'; return false; }
-    if (AUTH_HASHES.indexOf(makeAuthHash(u, p)) !== -1) {
-        authFails = 0;
-        authSetSession(u);
-        showApp(u);
-        return true;
-    }
-    authFails++;
-    document.getElementById('loginPass').value = '';
-    if (authFails >= AUTH_MAX_FAILS) {
-        authLockUntil = now + AUTH_LOCK_MS;
-        authFails = 0;
-        msg.textContent = 'Sai ' + AUTH_MAX_FAILS + ' lần liên tiếp. Tạm khóa ' + (AUTH_LOCK_MS / 1000) + ' giây.';
-    } else {
-        msg.textContent = 'Sai tên đăng nhập hoặc mật khẩu.';
-    }
-    return false;
-}
-
-function doLogout() {
-    authClearSession();
-    document.body.classList.add('locked');
-    document.getElementById('userLabel').textContent = '';
-    document.getElementById('loginUser').value = '';
-    document.getElementById('loginPass').value = '';
-    document.getElementById('loginMsg').textContent = '';
-    const el = document.getElementById('loginUser');
-    if (el && el.focus) el.focus();
-}
-
-(function initAuth() {
-    const u = authGetSession();
-    if (u) { showApp(u); }
-    else {
-        document.body.classList.add('locked');
-        const el = document.getElementById('loginUser');
-        if (el && el.focus) el.focus();
-    }
-})();
-// =================== HẾT PHẦN ĐĂNG NHẬP ===================
-
 // Hàm lọc bỏ toàn bộ ký tự đứng trước chữ "TAF" trên từng dòng
 function lamSachTienToTAF(text) {
   return text.replace(/^.*?\b(TAF\b)/gim, '$1');
@@ -803,10 +640,28 @@ document.addEventListener('DOMContentLoaded', function () {
         VVRG: { name: 'Rạch Giá',       hours: 9 },
         VVDH: { name: 'Đồng Hới',       hours: 9 }
     };
-    // Giờ phát hành thường gặp (chỉ cảnh báo mềm, không tính là lỗi)
+    // GIỜ PHÁT HÀNH CHUẨN CỦA TAF THƯỜNG (theo từng sân bay, sửa tại đây khi quy định thay đổi).
+    // Ngoài các giờ này chỉ được phát TAF AMD; phát "TAF" thường sẽ bị báo lỗi.
+    const ISSUE_GROUPS = [
+        { hours: ['02', '05', '08', '11', '14', '17', '20', '23'], apts: ['VVNB', 'VVTS', 'VVDN'] },
+        { hours: ['05', '11', '17', '23'], apts: ['VVCI', 'VVVH', 'VVVD', 'VVPB', 'VVPC', 'VVPK', 'VVCR', 'VVDL', 'VVBM', 'VVCT', 'VVPQ'] },
+        { hours: ['02', '05', '08', '20', '23'], apts: ['VVDB', 'VVTX', 'VVDH', 'VVCA', 'VVTH', 'VVCS', 'VVRG', 'VVCM'] }
+    ];
+    const ISSUE_HOURS_BY_APT = {};
+    ISSUE_GROUPS.forEach(g => g.apts.forEach(a => { ISSUE_HOURS_BY_APT[a] = g.hours; }));
+    // Sân bay chưa có trong ISSUE_GROUPS (nếu sau này thêm sân bay mới): dùng giờ thường gặp, chỉ cảnh báo mềm, không tính lỗi
     const STANDARD_ISSUE_HOURS = ['05', '11', '17', '23'];
 
+    function renderIssueRef() {
+        const box = document.getElementById('issueRef');
+        if (!box) return;
+        box.innerHTML = '<div style="font-size:11.5px;color:#64748b;">Giờ UTC, đúng phút 00 (VD: 0500Z = 05:00 UTC)</div>' + ISSUE_GROUPS.map(g =>
+            `<div class="apt-group"><b style="color:var(--primary)">${g.hours.map(h => h + '00').join(', ')}Z:</b> ` +
+            g.apts.map(c => `<code title="${AIRPORT_CONFIG[c] ? AIRPORT_CONFIG[c].name : c}">${c}</code>`).join(' ') + `</div>`
+        ).join('');
+    }
     function renderAirportRef() {
+        renderIssueRef();
         const box = document.getElementById('airportRef');
         if (!box) return;
         const groups = {};
@@ -867,6 +722,8 @@ BECMG 1606/1608 4000 -RA BKN010=`;
 
     function clearAll() {
         document.getElementById('tafInput').value = '';
+        lastReport = null;
+        setImportStatus('', false);
         document.getElementById('resultsArea').innerHTML = '<p style="color: #64748b; text-align: center; padding: 60px 20px;">Đã xóa trắng dữ liệu. Hãy dán bản tin TAF vào khung bên trái.</p>';
     }
 
@@ -952,6 +809,7 @@ BECMG 1606/1608 4000 -RA BKN010=`;
         else if (mode === 'CHANGE') modeLabel.innerText = 'Chế độ: Chỉ soát nhóm BIẾN ĐỔI';
         else modeLabel.innerText = 'Chế độ: Toàn bộ bản tin';
 
+        lastReport = null;
         try {
             const rawText = document.getElementById('tafInput').value.trim().toUpperCase();
             if (!rawText) {
@@ -959,7 +817,25 @@ BECMG 1606/1608 4000 -RA BKN010=`;
                 return;
             }
 
-            const messages = rawText.split('=').map(m => m.trim()).filter(m => m.length > 0);
+            // Tách bản tin theo dấu "=" và đánh dấu bản tin nào có dấu "=" kết thúc.
+            // Nếu thiếu "=" thì hai bản tin dính nhau: tách tại từ khóa TAF mới để vẫn soát và báo lỗi từng bản tin.
+            const parts = rawText.split('=');
+            const messages = [];
+            const msgHasEnd = [];
+            parts.forEach((chunk, i) => {
+                const toks = chunk.trim().split(/\s+/).filter(Boolean);
+                if (!toks.length) return;
+                let cur = [];
+                toks.forEach(t => {
+                    if (t === 'TAF' && cur.length && cur[0] === 'TAF') {
+                        messages.push(cur.join(' ')); msgHasEnd.push(false); cur = [];
+                    }
+                    cur.push(t);
+                });
+                messages.push(cur.join(' '));
+                msgHasEnd.push(i < parts.length - 1);   // có "=" ngay sau đoạn này
+            });
+            lastReport = { modeText: modeLabel.innerText.replace(/^Chế độ:\s*/, ''), items: [] };
             let htmlOutput = '';
             let totalOk = 0;
             let totalErr = 0;
@@ -990,6 +866,17 @@ BECMG 1606/1608 4000 -RA BKN010=`;
                     checks.push({ item: 'Loại điện văn', val: tokens[0] || 'Trống', status: 'NO', note: 'Phải bắt đầu bằng TAF' });
                 }
 
+                // 1b. Dấu kết thúc bản tin "=" (BẮT BUỘC)
+                const hasEnd = msgHasEnd[index];
+                if (hasEnd) {
+                    if (mode === 'ALL' || mode === 'BASE') {
+                        checks.push({ item: 'Kết thúc bản tin', val: '=', status: 'OK', note: 'Có dấu "=" kết thúc bản tin' });
+                    }
+                } else {
+                    errors.push('Bản tin không kết thúc bằng dấu "=" (bắt buộc)');
+                    checks.push({ item: 'Kết thúc bản tin', val: '(thiếu =)', status: 'NO', note: 'Mỗi bản tin TAF bắt buộc phải kết thúc bằng dấu "="' });
+                }
+
                 // 2. Mã sân bay
                 const icao = tokens[ptr] || '';
                 const airportCfg = AIRPORT_CONFIG[icao] || null;
@@ -1018,13 +905,31 @@ BECMG 1606/1608 4000 -RA BKN010=`;
                     issueMin = parseInt(mStr, 10);
 
                     if (issueDay >= 1 && issueDay <= 31 && issueHour >= 0 && issueHour <= 23 && issueMin >= 0 && issueMin <= 59) {
-                        issueDisplay = `Giờ phát: <b>${hStr}:${mStr}Z</b> — Ngày <b>${dStr}</b>`;
-                        let noteStr = `Phát hành lúc ${hStr}${mStr}Z ngày ${dStr}`;
-                        if (msgType === 'TAF' && !standardIssueHours.includes(hStr)) {
+                        issueDisplay = `Giờ phát: <b>${hStr}:${mStr} UTC</b> — Ngày <b>${dStr}</b>`;
+                        let noteStr = `Phát hành lúc ${hStr}${mStr}Z (UTC) ngày ${dStr}`;
+                        let issueStatus = 'OK';
+                        const aptHours = ISSUE_HOURS_BY_APT[icao] || null;
+                        const aptHoursTxt = aptHours ? aptHours.map(h => h + '00Z').join(', ') : '';
+                        if (aptHours) {
+                            // Giờ chuẩn tính theo UTC và đúng phút 00 (ví dụ 0500Z = 05:00 UTC)
+                            if (aptHours.includes(hStr) && mStr === '00') {
+                                noteStr += ` — đúng giờ phát hành chuẩn của ${icao}`;
+                            } else if (msgType === 'TAF') {
+                                issueStatus = 'NO';
+                                noteStr = `Giờ phát ${hStr}${mStr}Z (UTC) không phải giờ phát hành chuẩn của ${icao} (${aptHoursTxt}, đúng phút 00). Ngoài các giờ chuẩn chỉ được phát TAF AMD`;
+                                if (mode === 'ALL' || mode === 'BASE') {
+                                    errors.push(`Giờ phát hành ${hStr}${mStr}Z (UTC) ngoài giờ chuẩn của ${icao} (${aptHoursTxt}): phải là TAF AMD`);
+                                }
+                            } else if (msgType === 'TAF AMD') {
+                                noteStr += ` — ngoài giờ chuẩn (${aptHoursTxt}) nên đúng là TAF AMD`;
+                            } else {
+                                noteStr += ` (Lưu ý: TAF COR ngoài giờ chuẩn ${aptHoursTxt})`;
+                            }
+                        } else if (msgType === 'TAF' && !standardIssueHours.includes(hStr)) {
                             noteStr += ` (Lưu ý: Giờ phát chuẩn thường là 05, 11, 17, 23Z)`;
                         }
                         if (mode === 'ALL' || mode === 'BASE') {
-                            checks.push({ item: 'Ngày/Giờ phát hành', val: issueTime, status: 'OK', note: noteStr });
+                            checks.push({ item: 'Ngày/Giờ phát hành', val: issueTime, status: issueStatus, note: noteStr });
                         }
                     } else {
                         issueDisplay = `<span style="color:var(--danger)">Lỗi giá trị (${issueTime})</span>`;
@@ -1292,6 +1197,13 @@ BECMG 1606/1608 4000 -RA BKN010=`;
 
                 const isAllOk = errors.length === 0;
                 if (isAllOk) totalOk++; else totalErr++;
+                lastReport.items.push({
+                    stt: index + 1, msgType: msgType, icao: icao,
+                    apt: airportCfg ? airportCfg.name : '',
+                    issueTime: issueTime, validPeriod: validPeriod,
+                    ok: isAllOk, errors: errors.slice(), checks: checks.slice(),
+                    raw: cleanMsg + (hasEnd ? '=' : '')
+                });
 
                 htmlOutput += `
                     <div class="station-result">
@@ -1311,7 +1223,7 @@ BECMG 1606/1608 4000 -RA BKN010=`;
                                 <div class="time-meta-value">${validDisplay}</div>
                             </div>
                         </div>
-                        <div class="raw-code">${cleanMsg}=</div>
+                        <div class="raw-code">${cleanMsg}${hasEnd ? '=' : '<span style="color:var(--danger);font-weight:700">(thiếu =)</span>'}</div>
                         <table class="check-table">
                             <thead>
                                 <tr>
@@ -1353,6 +1265,246 @@ BECMG 1606/1608 4000 -RA BKN010=`;
     }
 	
 	
+
+    // =====================================================================
+    // NHẬP SỐ LIỆU TỪ FILE WORD / EXCEL  +  XUẤT KẾT QUẢ RA CSV
+    // (tự chứa, không cần thư viện ngoài, chạy được khi mở file offline)
+    // =====================================================================
+    let lastReport = null;   // kết quả soát lỗi gần nhất, dùng cho Xuất CSV
+
+    // ---------- Giải nén ZIP (docx/xlsx thực chất là file ZIP) ----------
+    async function zipOpen(buf) {
+        const u8 = new Uint8Array(buf);
+        const dv = new DataView(buf);
+        const dec = new TextDecoder('utf-8');
+        let eocd = -1;
+        for (let i = u8.length - 22; i >= Math.max(0, u8.length - 65557); i--) {
+            if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+        }
+        if (eocd < 0) throw new Error('File không đúng định dạng Word/Excel hiện đại (.docx/.xlsx).');
+        const total = dv.getUint16(eocd + 10, true);
+        let p = dv.getUint32(eocd + 16, true);
+        const entries = {};
+        for (let n = 0; n < total; n++) {
+            if (dv.getUint32(p, true) !== 0x02014b50) break;
+            const nlen = dv.getUint16(p + 28, true), elen = dv.getUint16(p + 30, true), clen = dv.getUint16(p + 32, true);
+            const name = dec.decode(u8.subarray(p + 46, p + 46 + nlen));
+            entries[name] = { method: dv.getUint16(p + 10, true), csize: dv.getUint32(p + 20, true), lho: dv.getUint32(p + 42, true) };
+            p += 46 + nlen + elen + clen;
+        }
+        async function read(name) {
+            const e = entries[name];
+            if (!e) return null;
+            const start = e.lho + 30 + dv.getUint16(e.lho + 26, true) + dv.getUint16(e.lho + 28, true);
+            const data = u8.subarray(start, start + e.csize);
+            if (e.method === 0) return dec.decode(data);
+            if (e.method === 8) {
+                if (typeof DecompressionStream === 'undefined') {
+                    throw new Error('Trình duyệt quá cũ, không giải nén được file. Hãy dùng Chrome/Edge bản mới.');
+                }
+                const stream = new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+                return dec.decode(await new Response(stream).arrayBuffer());
+            }
+            throw new Error('Kiểu nén trong file không được hỗ trợ.');
+        }
+        return { names: Object.keys(entries), read };
+    }
+
+    function xmlDecode(s) {
+        return s.replace(/&#x([0-9a-fA-F]+);/g, (m, h) => String.fromCodePoint(parseInt(h, 16)))
+                .replace(/&#(\d+);/g, (m, d) => String.fromCodePoint(parseInt(d, 10)))
+                .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&');
+    }
+
+    // ---------- Word (.docx): mỗi đoạn văn = 1 dòng ----------
+    async function docxToText(buf) {
+        const zip = await zipOpen(buf);
+        const xml = await zip.read('word/document.xml');
+        if (!xml) throw new Error('Không tìm thấy nội dung văn bản trong file Word.');
+        const lines = [];
+        (xml.match(/<w:p[ >][\s\S]*?<\/w:p>/g) || []).forEach(p => {
+            let line = '', m;
+            const re = /<w:t(?:\s[^>]*)?>([\s\S]*?)<\/w:t>|<w:tab\s*\/>|<w:br\s*\/>|<w:cr\s*\/>/g;
+            while ((m = re.exec(p))) {
+                if (m[1] !== undefined) line += xmlDecode(m[1]);
+                else line += m[0].indexOf('<w:tab') === 0 ? ' ' : '\n';
+            }
+            lines.push(line);
+        });
+        return lines.join('\n');
+    }
+
+    // ---------- Excel (.xlsx): mỗi hàng = 1 dòng (các ô cách nhau 1 dấu cách) ----------
+    function colIndex(ref) {
+        const letters = (ref.match(/^[A-Z]+/i) || ['A'])[0].toUpperCase();
+        let n = 0;
+        for (let i = 0; i < letters.length; i++) n = n * 26 + (letters.charCodeAt(i) - 64);
+        return n;
+    }
+    async function xlsxToText(buf) {
+        const zip = await zipOpen(buf);
+        const shared = [];
+        const ssXml = await zip.read('xl/sharedStrings.xml');
+        if (ssXml) {
+            (ssXml.match(/<si>[\s\S]*?<\/si>|<si\/>/g) || []).forEach(si => {
+                const clean = si.replace(/<rPh[\s\S]*?<\/rPh>/g, '');
+                let t = '', m;
+                const re = /<t(?:\s[^>]*)?>([\s\S]*?)<\/t>/g;
+                while ((m = re.exec(clean))) t += xmlDecode(m[1]);
+                shared.push(t);
+            });
+        }
+        const sheetNames = zip.names
+            .filter(n => /^xl\/worksheets\/sheet\d+\.xml$/.test(n))
+            .sort((a, b) => parseInt(a.match(/(\d+)\.xml$/)[1], 10) - parseInt(b.match(/(\d+)\.xml$/)[1], 10));
+        if (!sheetNames.length) throw new Error('Không tìm thấy trang tính nào trong file Excel.');
+        const lines = [];
+        for (const sn of sheetNames) {
+            const xml = await zip.read(sn);
+            (xml.match(/<row\b[\s\S]*?<\/row>/g) || []).forEach(row => {
+                const cells = [];
+                const re = /<c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g;
+                let m;
+                while ((m = re.exec(row))) {
+                    const attrs = m[1], body = m[2] || '';
+                    const ref = (attrs.match(/\br="([^"]+)"/) || [])[1] || '';
+                    const type = (attrs.match(/\bt="([^"]+)"/) || [])[1] || 'n';
+                    let val = '';
+                    if (type === 'inlineStr') {
+                        let t = '', mm;
+                        const r2 = /<t(?:\s[^>]*)?>([\s\S]*?)<\/t>/g;
+                        while ((mm = r2.exec(body))) t += xmlDecode(mm[1]);
+                        val = t;
+                    } else {
+                        const v = (body.match(/<v>([\s\S]*?)<\/v>/) || [])[1];
+                        if (v !== undefined) {
+                            if (type === 's') val = shared[parseInt(v, 10)] || '';
+                            else if (type === 'b') val = v === '1' ? 'TRUE' : 'FALSE';
+                            else val = xmlDecode(v);
+                        }
+                    }
+                    val = String(val).replace(/\r/g, '').trim();
+                    if (val) cells.push({ c: colIndex(ref), v: val });
+                }
+                cells.sort((a, b) => a.c - b.c);
+                if (cells.length) lines.push(cells.map(x => x.v).join(' '));
+            });
+        }
+        return lines.join('\n');
+    }
+
+    // ---------- Chuẩn hóa văn bản nạp vào: tách từng bản tin TAF, bảo đảm kết thúc bằng "=" ----------
+    function chuanHoaBanTinTAF(raw) {
+        const text = lamSachTienToTAF(String(raw).replace(/\r/g, '').replace(/ /g, ' '));
+        const lines = text.split('\n').map(l => l.replace(/[ \t]+/g, ' ').trim()).filter(l => l);
+        const blocks = [];
+        let cur = null;
+        lines.forEach(l => {
+            if (/^TAF\b/i.test(l)) {
+                if (cur) blocks.push(cur.lines.join('\n'));
+                cur = { lines: [l], closed: /=\s*$/.test(l) };
+            } else if (cur && !cur.closed) {
+                cur.lines.push(l);
+                if (/=\s*$/.test(l)) cur.closed = true;
+            }
+        });
+        if (cur) blocks.push(cur.lines.join('\n'));
+        // Không tự thêm dấu "=": thiếu "=" là lỗi bắt buộc phải để phần mềm báo ra
+        const joined = blocks.join('\n\n');
+        const count = (joined.match(/(^|\s)TAF(?=\s|$)/gi) || []).length;
+        return { text: joined, count };
+    }
+
+    function setImportStatus(msg, isErr) {
+        const el = document.getElementById('importStatus');
+        if (!el) return;
+        el.style.display = msg ? 'block' : 'none';
+        el.className = 'import-status' + (isErr ? ' err' : '');
+        el.textContent = msg || '';
+    }
+
+    function triggerImportFile() {
+        const inp = document.getElementById('fileImportInput');
+        inp.value = '';
+        inp.click();
+    }
+
+    async function handleImportFile(inp) {
+        const f = inp.files && inp.files[0];
+        if (!f) return;
+        const ext = (f.name.split('.').pop() || '').toLowerCase();
+        try {
+            let raw;
+            if (ext === 'docx' || ext === 'docm') raw = await docxToText(await f.arrayBuffer());
+            else if (ext === 'xlsx' || ext === 'xlsm') raw = await xlsxToText(await f.arrayBuffer());
+            else if (ext === 'txt') raw = await f.text();
+            else if (ext === 'csv' || ext === 'tsv') raw = (await f.text()).replace(/"/g, '').replace(/[;,\t]+/g, ' ');
+            else if (ext === 'doc' || ext === 'xls') throw new Error('Định dạng cũ .' + ext + ' chưa đọc được. Hãy mở file bằng Word/Excel rồi lưu lại thành .docx / .xlsx.');
+            else throw new Error('Chưa hỗ trợ định dạng .' + ext + ' (chỉ nhận .docx, .xlsx, .csv, .txt).');
+
+            const r = chuanHoaBanTinTAF(raw);
+            if (!r.count) throw new Error('Không tìm thấy bản tin nào bắt đầu bằng "TAF" trong file "' + f.name + '".');
+            document.getElementById('tafInput').value = r.text;
+            setImportStatus('Đã nạp ' + r.count + ' bản tin TAF từ file "' + f.name + '".', false);
+            runCheck('ALL');
+        } catch (e) {
+            setImportStatus('Lỗi nhập file: ' + e.message, true);
+        } finally {
+            inp.value = '';
+        }
+    }
+
+    // ---------- XUẤT CSV ----------
+    function htmlToPlain(s) {
+        return String(s == null ? '' : s)
+            .replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '')
+            .replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&')
+            .replace(/\s+/g, ' ').trim();
+    }
+    // Xuất dạng UTF-16 LE + phân cách TAB: Excel mở đúng tiếng Việt và đúng cột trên mọi máy
+    // (không phụ thuộc cấu hình dấu phân cách , hay ; của Windows)
+    function csvCell(v) {
+        const s = String(v == null ? '' : v).replace(/[\t\r\n]+/g, ' ');
+        return s.indexOf('"') >= 0 ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }
+    function encodeUtf16LE(str) {
+        const buf = new ArrayBuffer(2 + str.length * 2);
+        const dv = new DataView(buf);
+        dv.setUint16(0, 0xFEFF, true);                       // BOM
+        for (let i = 0; i < str.length; i++) dv.setUint16(2 + i * 2, str.charCodeAt(i), true);
+        return buf;
+    }
+    function buildCsv(report) {
+        const header = ['STT bản tin', 'Loại điện văn', 'Sân bay (ICAO)', 'Tên sân bay', 'Giờ phát hành', 'Thời hạn hiệu lực',
+                        'Kết luận', 'Số lỗi', 'Hạng mục', 'Nội dung điện văn', 'Soát', 'Chi tiết phân tích', 'Bản tin gốc', 'Chế độ soát'];
+        const rows = [header];
+        report.items.forEach(it => {
+            const concl = it.ok ? 'ĐẠT CHUẨN' : 'CÓ LỖI';
+            const base = [it.stt, it.msgType, it.icao, it.apt, it.issueTime, it.validPeriod, concl, it.errors.length];
+            if (!it.checks.length) rows.push(base.concat(['', '', '', '', it.raw, report.modeText]));
+            it.checks.forEach((c, ci) => {
+                // Chỉ dòng đầu tiên của mỗi bản tin chứa bản tin TAF gốc; các dòng sau để trống
+                rows.push(base.concat([htmlToPlain(c.item), htmlToPlain(c.val), c.status, htmlToPlain(c.note), ci === 0 ? it.raw : '', report.modeText]));
+            });
+        });
+        return rows.map(r => r.map(csvCell).join('\t')).join('\r\n') + '\r\n';
+    }
+    function exportCSV() {
+        if (!lastReport || !lastReport.items.length) {
+            alert('Chưa có kết quả để xuất. Hãy nhập bản tin và bấm một nút SOÁT trước.');
+            return;
+        }
+        const csv = buildCsv(lastReport);
+        const d = new Date();
+        const p2 = n => String(n).padStart(2, '0');
+        const name = 'KetQua_SoatLoi_TAF_' + d.getFullYear() + p2(d.getMonth() + 1) + p2(d.getDate()) + '_' + p2(d.getHours()) + p2(d.getMinutes()) + '.csv';
+        const url = URL.createObjectURL(new Blob([encodeUtf16LE(csv)], { type: 'text/csv;charset=utf-16le' }));
+        const a = document.createElement('a');
+        a.href = url; a.download = name;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+
 </script>
 
 
